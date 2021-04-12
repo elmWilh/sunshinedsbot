@@ -5,4 +5,5 @@ My first project, so it is can have many issues in code
 Наш дискорд бот, полностью на русском (исключая бэкенд)
 
 ===================
+
 "ладно" counter it is fork from https://github.com/NWordCounter/bot
