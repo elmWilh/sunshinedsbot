@@ -221,7 +221,7 @@ They've said the N-word __23,737 times__ since they were last investigated
         counter = 1
         for m, c in leaderboard.items():
             description += (f"**{counter}.** {m if param == 'global' else m.mention} - __{c:,} "
-                            f"раз{'' if c == 1 or c == 3 or c == 4 else ''}__\n")
+                            f"раз{'' if c == 1 or c == 3 or c == 4 else 'а'}__\n")
             counter += 1
 
         description = description.replace("**1.**", ":first_place:").replace("**2.**", ":second_place:").replace("**3.**", ":third_place:")
