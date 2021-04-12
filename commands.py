@@ -108,13 +108,13 @@ They've said the N-word __23,737 times__ since they were last investigated
 
         if count["total"]:
             msg = (f"{user.mention} сказал ладно **{count['total']:,} "
-                   f"раз{'' if count['total'] == 1 else 'а'}**")
+                   f"раз{'а' if count['total'] == 2 or count['total'] == 3 or count['total'] == 4 else 'а'}**")
             if "last_time" in count:
                 since_last = count["total"] - count["last_time"]
                 if since_last:
                     msg += (f".\n\nТак же {user.mention} сказал ладно __{since_last:,} "
-                            f"раз{'' if since_last == 1 else 'а'}__ с прошлой "
-                            "проверки")
+                            f"раз{'а' if since_last == 2 or since_last == 3 or since_last == 4 else 'а'}__ "
+                            "с прошлой проверки")
             await ctx.send(msg)
             self.bot.lwords[user.id]["last_time"] = self.bot.lwords[user.id]["total"]
         else:
