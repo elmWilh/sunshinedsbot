@@ -14,7 +14,7 @@ import datetime
 import time
 import pprint
 import sys
-
+from random import randint
 
 def find_color(ctx):
     """Find the bot's rendered color. If it's the default color or we're in a DM, return Discord's "greyple" color"""
@@ -164,6 +164,7 @@ They've said the N-word __23,737 times__ since they were last investigated
             frmtd_uptime.append(f"{se}с")
 
         allUsers = f"{len(self.bot.lwords):,}"
+        for _ in range(1): randomInt = randint(0, 100)
         embed = discord.Embed(
             description=f"ID: {self.bot.user.id}",
             timestamp=datetime.datetime.utcnow(),
@@ -188,7 +189,7 @@ They've said the N-word __23,737 times__ since they were last investigated
             value=f"{self.bot.lwords[0]['total']:,} ",
             inline=False)
         embed.set_author(name="Статистика", icon_url=self.bot.user.avatar_url)
-        embed.set_footer(text="Эти статистические данные верны на: 98%")
+        embed.set_footer(text="Эти статистические данные верны на: " + str(randomInt) + "%")
 
         await ctx.send(embed=embed)
 
@@ -238,8 +239,9 @@ They've said the N-word __23,737 times__ since they were last investigated
             embed.set_author(
                 name=f"Топ сервера {ctx.guild.name}", icon_url=ctx.guild.icon_url)
 
+        for _ in range(1): randomInt = randint(0, 100)
         embed.set_footer(
-            text="Эти списки верны на: 109%", icon_url=self.bot.user.avatar_url)
+            text="Эти списки верны на: " + str(randomInt) + "%", icon_url=self.bot.user.avatar_url)
 
         await ctx.send(embed=embed)
 
