@@ -24,7 +24,7 @@ def find_color(ctx):
             color = discord.Color.greyple()
         else:
             color = ctx.guild.me.color
-    except AttributeError:  #* If it's a DM channel
+    except AttributeError:  # * If it's a DM channel
         color = discord.Color.greyple()
     return color
 
@@ -44,9 +44,9 @@ class Commands(commands.Cog):
         embed = discord.Embed(
             title="Команда помощи",
             description="Я считаю каждый раз когда кто то говорит " + '"ладно"' + ". Я "
-                        "довольно простой бот в использовании. Мой префикс это @упоминание, имеется ввиду что Вам нужно "
-                        f"вставлять {self.bot.user.mention} перед каждой командой."
-                        "\n\nВот короткий список моих команд:",
+                                                                                  "довольно простой бот в использовании. Мой префикс это @упоминание, имеется ввиду что Вам нужно "
+                                                                                  f"вставлять {self.bot.user.mention} перед каждой командой."
+                                                                                  "\n\nВот короткий список моих команд:",
             color=find_color(ctx))
         embed.set_footer(
             text="Примечание: Нет, я не считаю слова перед тем как присоединился на сервер")
@@ -61,7 +61,7 @@ class Commands(commands.Cog):
 
         embed = discord.Embed(
             title=str(self.bot.user), description=self.bot.app_info.description +
-            f"\n\n**ID**: {self.bot.app_info.id}", color=find_color(ctx))
+                                                  f"\n\n**ID**: {self.bot.app_info.id}", color=find_color(ctx))
 
         embed.set_thumbnail(url=self.bot.app_info.icon_url)
         embed.add_field(name="Владелц", value=self.bot.app_info.owner)
@@ -83,7 +83,7 @@ class Commands(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def count(self, ctx, user: discord.User=None):
+    async def count(self, ctx, user: discord.User = None):
         """Узнайте, сколько раз пользователь сказал "ладно"
         Формат: `count <@пинг пользователя>`
         Если вы не указываете пинг, я укажу **вашу** статистику
@@ -92,7 +92,7 @@ class Commands(commands.Cog):
             user = ctx.author
         if user == self.bot.user:
             return await ctx.send(
-            """@MATUKITE has said the N-word **1,070,855 times**,
+                """@MATUKITE has said the N-word **1,070,855 times**,
 __1,070,801 of which had a hard-R__
 
 They've said the N-word __23,737 times__ since they were last investigated
@@ -130,8 +130,8 @@ They've said the N-word __23,737 times__ since they were last investigated
         """Скидывает ссылку чтобы Вы могли пригласить бота на свой сервер"""
 
         await ctx.send("Это моя пригласительная ссылка чтобы Вы могли считать " + '"ладно"' + " тоже:\n"
-                       f"https://discordapp.com/oauth2/authorize?client_id={self.bot.app_info.id}"
-                       "&scope=bot&permissions=8")
+                                                                                              f"https://discordapp.com/oauth2/authorize?client_id={self.bot.app_info.id}"
+                                                                                              "&scope=bot&permissions=8")
 
     @commands.command()
     async def stats(self, ctx):
@@ -141,12 +141,12 @@ They've said the N-word __23,737 times__ since they were last investigated
 
         uptime = datetime.datetime.utcnow() - self.bot.started_at
 
-        #* This code was copied from my other bot, MAT
-        y = int(uptime.total_seconds()) // 31557600  #* Number of seconds in 356.25 days
-        mo = int(uptime.total_seconds()) // 2592000 % 12  #* Number of seconds in 30 days
-        d = int(uptime.total_seconds()) // 86400 % 30  #* Number of seconds in 1 day
-        h = int(uptime.total_seconds()) // 3600 % 24  #* Number of seconds in 1 hour
-        mi = int(uptime.total_seconds()) // 60 % 60  #* etc.
+        # * This code was copied from my other bot, MAT
+        y = int(uptime.total_seconds()) // 31557600  # * Number of seconds in 356.25 days
+        mo = int(uptime.total_seconds()) // 2592000 % 12  # * Number of seconds in 30 days
+        d = int(uptime.total_seconds()) // 86400 % 30  # * Number of seconds in 1 day
+        h = int(uptime.total_seconds()) // 3600 % 24  # * Number of seconds in 1 hour
+        mi = int(uptime.total_seconds()) // 60 % 60  # * etc.
         se = int(uptime.total_seconds()) % 60
 
         frmtd_uptime = []
@@ -163,6 +163,7 @@ They've said the N-word __23,737 times__ since they were last investigated
         if se != 0:
             frmtd_uptime.append(f"{se}с")
 
+        allUsers = f"{len(self.bot.lwords):,}"
         embed = discord.Embed(
             description=f"ID: {self.bot.user.id}",
             timestamp=datetime.datetime.utcnow(),
@@ -180,7 +181,7 @@ They've said the N-word __23,737 times__ since they were last investigated
         embed.add_field(name="Аптайм", value=" ".join(frmtd_uptime) + " после прошлого рестарта")
         embed.add_field(
             name="Количество пользователей кто произнес " + '"ладно"',
-            value=f"{len(self.bot.lwords):,}",
+            value=int(allUsers) - 1,
             inline=False)
         embed.add_field(
             name="Всего слов насчитано",
@@ -193,11 +194,12 @@ They've said the N-word __23,737 times__ since they were last investigated
 
     @commands.command(aliases=["leaderboard", "high"])
     @commands.guild_only()
-    async def top(self, ctx, param: str=None):
+    async def top(self, ctx, param: str = None):
         """Показывает таблицу лидеров по произношению слова "ладно" на этом сервере. Используйте `top global` чтобы посмотреть таблицу лидеров всех серверов
         Примечание: Если пользователь сказал "ладно" на другом сервере, на котором я тоже есть, они будут приняты во внимание.
         """
         await ctx.channel.trigger_typing()
+
         def create_leaderboard():
             leaderboard = {}
             if param == "global":
@@ -224,7 +226,8 @@ They've said the N-word __23,737 times__ since they were last investigated
                             f"раз{'а' if c == 2 or c == 3 or c == 4 else ''}__\n")
             counter += 1
 
-        description = description.replace("**1.**", ":first_place:").replace("**2.**", ":second_place:").replace("**3.**", ":third_place:")
+        description = description.replace("**1.**", ":first_place:").replace("**2.**", ":second_place:").replace(
+            "**3.**", ":third_place:")
 
         embed = discord.Embed(description=description, color=find_color(ctx),
                               timestamp=datetime.datetime.utcnow())
@@ -247,7 +250,7 @@ They've said the N-word __23,737 times__ since they were last investigated
 
     @commands.command(hidden=True)
     @commands.is_owner()
-    async def edit(self, ctx, user_id: int, total: int, last_time: int=None):
+    async def edit(self, ctx, user_id: int, total: int, last_time: int = None):
         """Edit a user's entry in the dict or add a new one"""
 
         if last_time:
