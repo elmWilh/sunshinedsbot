@@ -12,6 +12,7 @@ import time
 import pprint
 import sys
 from random import randint
+import asyncpg
 
 
 def find_color(ctx):
@@ -252,35 +253,26 @@ They've said the N-word __23,737 times__ since they were last investigated
     @commands.is_owner()
     async def edit(self, ctx, user_id: int, total: int, last_time: int = None):
         """Отредактируйте запись пользователя в ДБ или добавьте новую"""
-
-        if last_time:
-            self.bot.lwords[user_id] = {"id": user_id, "total": total, "last_time": last_time}
-            async with self.bot.pool.acquire() as conn:
-                await conn.execute("""
-                    UPDATE lwords
-                    SET total = (SELECT total FROM lwords WHERE id = 0) - (SELECT total FROM lwords WHERE id = """ + ctx.send(total) + """)
-                    WHERE id = 0;
-                    ;""".format(", ".join([f"({u})" for u in self.bot.lwords])))
-        else:
-            self.bot.lwords[user_id] = {"id": user_id, "total": total}
-            async with self.bot.pool.acquire() as conn:
-                await conn.execute("""
-                    UPDATE lwords
-                    SET total = (SELECT total FROM lwords WHERE id = 0) - (SELECT total FROM lwords WHERE id = """ + ctx.send(total) + """)
-                    WHERE id = 0;
-                    ;""".format(", ".join([f"({u})" for u in self.bot.lwords])))
+        totalBefore = self.bot.lwords[user_id]['total']
+        if total < totalBefore:
+            self.bot.lwords[0]["total"] -= (totalBefore - (self.bot.lwords[user_id]['total']))
+            if last_time:
+                self.bot.lwords[user_id] = {"id": user_id, "total": total, "last_time": last_time}
+            else:
+                self.bot.lwords[user_id] = {"id": user_id, "total": total}
+        if total > totalBefore:
+            self.bot.lwords[0]["total"] += (int(self.bot.lwords[user_id]['total']) - totalBefore)
+            if last_time:
+                self.bot.lwords[user_id] = {"id": user_id, "total": total, "last_time": last_time}
+            else:
+                self.bot.lwords[user_id] = {"id": user_id, "total": total}
         await ctx.send("Готово")
 
     @commands.command(hidden=True)
     @commands.is_owner()
     async def pop(self, ctx, user_id: int):
         """Удалите пользователя с ДБ"""
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute("""
-                UPDATE lwords
-                SET total = (SELECT total FROM lwords WHERE id = 0) - (SELECT total FROM lwords WHERE id = """ + ctx.send(user_id) + """)
-                WHERE id = 0;
-            ;""".format(", ".join([f"({u})" for u in self.bot.lwords])))
+        self.bot.lwords[0]["total"] -= int(self.bot.lwords[user_id]['total'])
         try:
             self.bot.lwords.pop(user_id)
             await ctx.send("Готово")
