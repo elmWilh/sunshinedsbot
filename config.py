@@ -1,5 +1,5 @@
-# Discord bot token
+# Дискорд токен бота
 TOKEN = "TOKEN"
 
-# Postgres DSN for the bot's database. It's needed for the bot to be able to store data in a SQL database. It looks like this: "postgres://[user]:[password]@[host]:[port]/[database name]" (Some options may not be needed)
+# Данные от Postgres (СУБД). Это необходимо, чтобы бот мог хранить данные в базе данных SQL. Данные выглядят так: "postgres://[user]:[password]@[host]:[port]/[database name]" (Некоторые функции не обязательные)
 POSTGRES = "postgres://[user]:[password]@[host]:[port]/[database name]"

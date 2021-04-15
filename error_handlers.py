@@ -1,9 +1,6 @@
 """
-N-Word Counter - A simple-to-use Discord bot that counts how many times each user has said the N-word
-Written in 2019 by NinjaSnail1080 (Discord user: @NinjaSnail1080#8581)
-
-To the extent possible under law, the author has dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty.
-You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+"ладно" считатель - Простой в использовании бот Discord, который считает, сколько раз каждый пользователь сказал ладно
+Написано в 2019 by NinjaSnail1080 (Дискорд: @NinjaSnail1080#8581), улучшено и переведено Perchun_Pak
 """
 
 from discord.ext import commands
@@ -11,7 +8,7 @@ import discord
 
 
 class Error_Handlers(commands.Cog):
-    """Error Handlers for commands"""
+    """Плейсхолдеры ошибкок"""
 
     def __init__(self, bot):
         self.bot = bot

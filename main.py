@@ -1,9 +1,6 @@
 """
-N-Word Counter - A simple-to-use Discord bot that counts how many times each user has said the N-word
-Written in 2019 by NinjaSnail1080 (Discord user: @NinjaSnail1080#8581)
-
-To the extent possible under law, the author has dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty.
-You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+"ладно" считатель - Простой в использовании бот Discord, который считает, сколько раз каждый пользователь сказал ладно
+Написано в 2019 by NinjaSnail1080 (Дискорд: @NinjaSnail1080#8581), улучшено и переведено Perchun_Pak
 """
 
 from discord.ext import commands, tasks
@@ -22,7 +19,7 @@ bot_intents.members = True
 
 bot = commands.Bot(
     command_prefix=commands.when_mentioned,
-    description="ладно-Word Counter",
+    description="ладно считатель",
     case_insensitive=True,
     help_command=None,
     status=discord.Status.invisible,
@@ -37,7 +34,7 @@ bot.load_extension("error_handlers")
 
 
 async def create_pool():
-    """Create table in postgres database if it doesn't already exist. Otherwise, get the n-word data"""
+    """Создает таблицы в бд, если они уже есть - загружает их"""
 
     bot.pool = await asyncpg.create_pool(config.POSTGRES)
     async with bot.pool.acquire() as conn:
@@ -119,7 +116,7 @@ async def on_message(message):
 
 @tasks.loop(minutes=5, loop=bot.loop)
 async def update_db():
-    """Update the SQL database every 5 minutes"""
+    """Обновляет ДБ каждые 5 минут"""
 
     async with bot.pool.acquire() as conn:
         await conn.execute("""
@@ -141,18 +138,18 @@ async def update_db():
 @bot.command(hidden=True)
 @commands.is_owner()
 async def reload(ctx):
-    """Reload the bot's cogs"""
+    """Перезагружает некоторые файлы бота"""
 
     bot.reload_extension("commands")
     bot.reload_extension("error_handlers")
-    await ctx.send("Reloaded extensions")
+    await ctx.send("Файлы перезагружены")
 
 
 @bot.command(hidden=True)
 @commands.is_owner()
 async def restartdb(ctx):
     await create_pool()
-    await ctx.send("Restarted database")
+    await ctx.send("ДБ перезагружена")
 
 
 @bot.command(hidden=True)
@@ -160,7 +157,7 @@ async def restartdb(ctx):
 async def restartudb(ctx):
     update_db.cancel()
     update_db.start()
-    await ctx.send("Cancelled and restarted `update_db()`")
+    await ctx.send("Отменено и запущено `update_db`")
 
 
 try:

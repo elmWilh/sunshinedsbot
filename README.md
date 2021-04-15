@@ -1,38 +1,40 @@
 # Sunshine Discord Bot
 
-Our discord bot, fully translated to russian (without backend)
+Наш дискорд бот, полностью переведен на русский
 
-My first project, so it is can have many issues in code
+Мой первый проект, поэтому может содержать много ошиьок
 
 ## Installing
 
-1. **Get Python 3.6 or higher**
+1. **Установите Python 3.6 или выше**
 
-This is required to run the bot
+Это нужно для запуска бота
 
-2. **Clone this repository**
+2. **Клонируйте репозиторий**
 
-3. **Set up a virtual environment**
+3. **Настроить виртуальную среду**
 
-Do `python3 -m venv <path to repository>`
+Запустите `python3 -m venv <path to repository>`
 
-4. **Once in the venv, install dependencies**
+4. **Попав в виртуальную среду, устанавливаем зависимости**
 
-Run `python3 -m pip install -U -r REQUIREMENTS.txt`
+Запустите `python3 -m pip install -U -r REQUIREMENTS.txt`
 
-5. **Create a database in PostGreSQL**
+5. **Создать базу данных в формате PostGreSQL**
 
-You will need version 9.5 or higher. The database will store the n-word count for each user. There's no centralized database.
+Вам нужна будет версия 9.5 или выше. База данных будет хранить количество "ладно" слов для каждого пользователя. Централизованной базы данных нет.
 
-6. **Setup configuration**
+6. **Настройте конфигурацию**
 
-There's a file in the root directory called `config.py` which contains two variables that are needed in order to run the bot. One is `TOKEN`, which is a string containing the Discord bot token. The other variable is `POSTGRES`, which is a string containing the DSN for the Postgres database created in step 5.
+В корневом каталоге есть файл под названием `config.py`, который содержит две переменные, необходимые для запуска бота. Один из них - `TOKEN`, который представляет собой строку, содержащую токен бота Discord. Другой переменной является POSTGRES, которая представляет собой строку, содержащую DSN для базы данных Postgres, созданной на шаге 5.
 
-> from https://github.com/NWordCounter/bot
+> взято и перевено с https://github.com/NWordCounter/bot
 
 ---
 
-**Important Note**: You need to turn on the `SERVER MEMBERS` privileged intent in order for the bot to work. [Follow these instructions](https://discordpy.readthedocs.io/en/latest/intents.html#privileged-intents) to turn it on.
+**Важная Заметка**: Вам нужно включить `SERVER MEMBERS` привилегию для работы бота. [Следуйте этим инструкциям](https://discordpy.readthedocs.io/en/latest/intents.html#privileged-intents) чтобы включить это.
+
+**Важная Заметка 2**: Нет, я не собираюсь выпускать "ладно" считатель отдельным ботом, так как к нему не будет никакого интереса.
 
 ## Credits
 

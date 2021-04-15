@@ -1,9 +1,6 @@
 """
-N-Word Counter - A simple-to-use Discord bot that counts how many times each user has said the N-word
-Written in 2019 by NinjaSnail1080 (Discord user: @NinjaSnail1080#8581)
-
-To the extent possible under law, the author has dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty.
-You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+"ладно" считатель - Простой в использовании бот Discord, который считает, сколько раз каждый пользователь сказал ладно
+Написано в 2019 by NinjaSnail1080 (Дискорд: @NinjaSnail1080#8581), улучшено и переведено Perchun_Pak
 """
 
 from discord.ext import commands
@@ -16,8 +13,9 @@ import pprint
 import sys
 from random import randint
 
+
 def find_color(ctx):
-    """Find the bot's rendered color. If it's the default color or we're in a DM, return Discord's "greyple" color"""
+    """Ищет цвет отрисовки бота. Если это цвет по умолчанию или мы находимся в ЛС, верните "greyple" цвет Дискорда."""
 
     try:
         if ctx.guild.me.color == discord.Color.default():
@@ -30,7 +28,7 @@ def find_color(ctx):
 
 
 class Commands(commands.Cog):
-    """Commands for the N-Word Counter"""
+    """Команды для ладно считателя"""
 
     def __init__(self, bot):
         self.bot = bot
@@ -99,7 +97,7 @@ They've said the N-word __23,737 times__ since they were last investigated
             """)
         if user.bot:
             return await ctx.send(
-                "Я не считаю " + '"ладно-слова"' + ", сказанные ботами. Представляете, насколько это было бы беспокойно?")
+                "Я не считаю " + '"ладно-слова"' + ", сказанные ботами. Представляете, насколько это было бы странно?")
 
         try:
             count = self.bot.lwords[user.id]
@@ -182,7 +180,7 @@ They've said the N-word __23,737 times__ since they were last investigated
         embed.add_field(name="Аптайм", value=" ".join(frmtd_uptime) + " после прошлого рестарта")
         embed.add_field(
             name="Количество пользователей кто произнес " + '"ладно"',
-            value=int(allUsers) - 1,
+            value=str(int(allUsers) - 1),
             inline=False)
         embed.add_field(
             name="Всего слов насчитано",
@@ -253,42 +251,42 @@ They've said the N-word __23,737 times__ since they were last investigated
     @commands.command(hidden=True)
     @commands.is_owner()
     async def edit(self, ctx, user_id: int, total: int, last_time: int = None):
-        """Edit a user's entry in the dict or add a new one"""
+        """Отредактируйте запись пользователя в ДБ или добавьте новую"""
 
         if last_time:
             self.bot.lwords[user_id] = {"id": user_id, "total": total, "last_time": last_time}
         else:
             self.bot.lwords[user_id] = {"id": user_id, "total": total}
-        await ctx.send("Done")
+        await ctx.send("Готово")
 
     @commands.command(hidden=True)
     @commands.is_owner()
     async def pop(self, ctx, user_id: int):
-        """Delete a user's entry from the dict"""
+        """Удалите пользователя с ДБ"""
 
         try:
             self.bot.lwords.pop(user_id)
-            await ctx.send("Done")
+            await ctx.send("Готово")
         except KeyError as e:
-            await ctx.send(f"KeyError: ```{e}```")
+            await ctx.send(f"Ошибка: ```{e}```")
 
     @commands.command(hidden=True)
     @commands.is_owner()
     async def execute(self, ctx, *, query):
-        """Execute a query in the database"""
+        """Выполнить запрос в базе данных"""
 
         try:
             with ctx.channel.typing():
                 async with self.bot.pool.acquire() as conn:
                     result = await conn.execute(query)
-            await ctx.send(f"Query complete:```{result}```")
+            await ctx.send(f"Запрос выполнен:```{result}```")
         except Exception as e:
-            await ctx.send(f"Query failed:```{e}```")
+            await ctx.send(f"Ошибка:```{e}```")
 
     @commands.command(hidden=True)
     @commands.is_owner()
     async def fetch(self, ctx, *, query):
-        """Run a query in the database and fetch the result"""
+        """Выполнить поиск в базе данных"""
 
         try:
             with ctx.channel.typing():
@@ -296,23 +294,22 @@ They've said the N-word __23,737 times__ since they were last investigated
                     result = await conn.fetch(query)
 
             fmtd_result = pprint.pformat([dict(i) for i in result])
-            await ctx.send(f"Query complete:```{fmtd_result}```")
+            await ctx.send(f"Поиск выполнен:```{fmtd_result}```")
         except Exception as e:
-            await ctx.send(f"Query failed:```{e}```")
+            await ctx.send(f"Ошибка:```{e}```")
 
     @commands.command(aliases=["resetstatus"], hidden=True)
     @commands.is_owner()
     async def restartstatus(self, ctx):
-        await self.bot.change_presence(status=discord.Status.dnd, activity=discord.Activity(
-            name=f"for N-Words on {len(self.bot.guilds)} servers",
-            type=discord.ActivityType.watching))
+        await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(
+            name=f'кто сколько раз сказал "ладно"', type=discord.ActivityType.competing))
 
-        await ctx.send("Reset playing status")
+        await ctx.send("Статус был сброшен")
 
     @commands.command(hidden=True)
     @commands.is_owner()
     async def setstatus(self, ctx, status):
-        """Change the bot's presence"""
+        """Изменить статус бота"""
 
         if status.startswith("on"):
             await self.bot.change_presence(status=discord.Status.online)
@@ -323,14 +320,14 @@ They've said the N-word __23,737 times__ since they were last investigated
         elif status.startswith("off") or status.startswith("in"):
             await self.bot.change_presence(status=discord.Status.invisible)
         else:
-            await ctx.send("Invalid status")
+            await ctx.send("Недействительный статус")
 
-        await ctx.send("Set new status")
+        await ctx.send("Поставить новый статус")
 
     @commands.command(hidden=True)
     @commands.is_owner()
     async def updatedb(self, ctx):
-        temp = await ctx.send("Manually updating... This may take a few minutes... Please wait...")
+        temp = await ctx.send("Обновление вручную... Это может занять несколько минут... Подождите...")
         with ctx.channel.typing():
             start = time.perf_counter()
             async with self.bot.pool.acquire() as conn:
@@ -354,7 +351,7 @@ They've said the N-word __23,737 times__ since they were last investigated
         sec = int(delta) % 60
         ms = round(delta * 1000 % 1000)
         await temp.delete()
-        await ctx.send(f"Finished updating database ({mi}m {sec}s {ms}ms)")
+        await ctx.send(f"Завершено обновление базы данных ({mi}м {sec}с {ms}мс)")
 
 
 def setup(bot):
