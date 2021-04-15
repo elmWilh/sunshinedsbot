@@ -255,15 +255,32 @@ They've said the N-word __23,737 times__ since they were last investigated
 
         if last_time:
             self.bot.lwords[user_id] = {"id": user_id, "total": total, "last_time": last_time}
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute("""
+                    UPDATE lwords
+                    SET total = (SELECT total FROM lwords WHERE id = 0) - (SELECT total FROM lwords WHERE id = """ + ctx.send(total) + """)
+                    WHERE id = 0;
+                    ;""".format(", ".join([f"({u})" for u in self.bot.lwords])))
         else:
             self.bot.lwords[user_id] = {"id": user_id, "total": total}
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute("""
+                    UPDATE lwords
+                    SET total = (SELECT total FROM lwords WHERE id = 0) - (SELECT total FROM lwords WHERE id = """ + ctx.send(total) + """)
+                    WHERE id = 0;
+                    ;""".format(", ".join([f"({u})" for u in self.bot.lwords])))
         await ctx.send("Готово")
 
     @commands.command(hidden=True)
     @commands.is_owner()
     async def pop(self, ctx, user_id: int):
         """Удалите пользователя с ДБ"""
-
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute("""
+                UPDATE lwords
+                SET total = (SELECT total FROM lwords WHERE id = 0) - (SELECT total FROM lwords WHERE id = """ + ctx.send(user_id) + """)
+                WHERE id = 0;
+            ;""".format(", ".join([f"({u})" for u in self.bot.lwords])))
         try:
             self.bot.lwords.pop(user_id)
             await ctx.send("Готово")
