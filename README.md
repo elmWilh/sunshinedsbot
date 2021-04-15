@@ -26,7 +26,7 @@ You will need version 9.5 or higher. The database will store the n-word count fo
 
 6. **Setup configuration**
 
-There's a file in the root directory called config.py which contains two variables that are needed in order to run the bot. One is TOKEN, which is a string containing the Discord bot token. The other variable is POSTGRES, which is a string containing the DSN for the Postgres database created in step 5.
+There's a file in the root directory called `config.py` which contains two variables that are needed in order to run the bot. One is `TOKEN`, which is a string containing the Discord bot token. The other variable is `POSTGRES`, which is a string containing the DSN for the Postgres database created in step 5.
 
 > from https://github.com/NWordCounter/bot
 
