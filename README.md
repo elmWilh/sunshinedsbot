@@ -30,9 +30,9 @@ There's a file in the root directory called `config.py` which contains two varia
 
 > from https://github.com/NWordCounter/bot
 
-#
+---
 
-**Important Note**: You need to turn on the `SERVER MEMBERS` privileged intent in order for the bot to work. [Follow these instructions to turn it on](https://discordpy.readthedocs.io/en/latest/intents.html#privileged-intents).
+**Important Note**: You need to turn on the `SERVER MEMBERS` privileged intent in order for the bot to work. [Follow these instructions](https://discordpy.readthedocs.io/en/latest/intents.html#privileged-intents) to turn it on.
 
 ## Credits
 
