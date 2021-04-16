@@ -266,7 +266,7 @@ They've said the N-word __23,737 times__ since they were last investigated
                 self.bot.lwords[user_id] = {"id": user_id, "total": total, "last_time": last_time}
             else:
                 self.bot.lwords[user_id] = {"id": user_id, "total": total}
-        else
+        else:
             await ctx.send("Неизвестная ошибка")
         await ctx.send("Готово")
 
