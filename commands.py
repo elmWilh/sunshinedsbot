@@ -260,12 +260,14 @@ They've said the N-word __23,737 times__ since they were last investigated
                 self.bot.lwords[user_id] = {"id": user_id, "total": total, "last_time": last_time}
             else:
                 self.bot.lwords[user_id] = {"id": user_id, "total": total}
-        if total > totalBefore:
+        elif total > totalBefore:
             self.bot.lwords[0]["total"] += (int(self.bot.lwords[user_id]['total']) - totalBefore)
             if last_time:
                 self.bot.lwords[user_id] = {"id": user_id, "total": total, "last_time": last_time}
             else:
                 self.bot.lwords[user_id] = {"id": user_id, "total": total}
+        else
+            await ctx.send("Неизвестная ошибка")
         await ctx.send("Готово")
 
     @commands.command(hidden=True)
