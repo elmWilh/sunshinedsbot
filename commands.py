@@ -84,7 +84,7 @@ class Commands(commands.Cog):
     @commands.command()
     async def count(self, ctx, user: discord.User = None):
         """Узнайте, сколько раз пользователь сказал "ладно"
-        Формат: `count <@пинг пользователя>`
+        Формат: `@<сервер> count <@пользователь>`
         Если вы не указываете пинг, я укажу **вашу** статистику
         """
         if user is None:
@@ -126,7 +126,7 @@ They've said the N-word __23,737 times__ since they were last investigated
 
     @commands.command()
     async def invite(self, ctx):
-        """Скидывает ссылку чтобы Вы могли пригласить бота на свой сервер"""
+        """Скидывает ссылку чтобы вы могли пригласить бота на свой сервер"""
 
         await ctx.send("Это моя пригласительная ссылка чтобы Вы могли считать " + '"ладно"' + " тоже:\n"
                                                                                               f"https://discordapp.com/oauth2/authorize?client_id={self.bot.app_info.id}"
@@ -238,7 +238,7 @@ They've said the N-word __23,737 times__ since they were last investigated
             embed.set_author(
                 name=f"Топ сервера {ctx.guild.name}", icon_url=ctx.guild.icon_url)
 
-        for _ in range(1): randomInt = randint(0, 100)
+        for _ in range(1): randomInt = randint(10, 100)
         embed.set_footer(
             text="Эти списки верны на: " + str(randomInt) + "%", icon_url=self.bot.user.avatar_url)
 
