@@ -40,4 +40,4 @@
 
 "ладно" counter it is fork from https://github.com/NWordCounter/bot
 
-Большое спасибо @WINGS07, @Nikita224 и особенное спасибо моему брату @JeffyOLOLO
+Большое спасибо @WINGS07, (@Nikita224)[https://github.com/Nikita244] и особенное спасибо моему брату @JeffyOLOLO
